@@ -17,7 +17,7 @@
 				<div class="col-lg-8 " id="menu">
 					<ul class="nav nav-pills pull-right">
 						<li role="presentation"
-							class="<?php (isset($_GET['menu']) && $_GET['menu']=='dashboard')?'active':'';?>"if><a
+							class="<?php (isset($_GET['menu']) && $_GET['menu']=='dashboard')?'active':'';?>"><a
 							href="aluno_lista.php?menu=dashboard">Dashboard</a></li>
 						<li role="presentation"
 							class="<?=(isset($_GET['menu']) &&$_GET['menu']=='aluno')?'active':'';?>"><a
@@ -41,8 +41,7 @@
 	<div id="content">
 		<div class="container">
 		<?php
-		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'aluno') {
-			?>
+		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'aluno') {?>
 			<div class="row ">
 				<h1>Dashboard</h1>
 				<ol class="breadcrumb">
@@ -91,9 +90,7 @@
 								<input type="submit"value="Salvar"/>
 			
 						</form>
-			<?php } ?>
-					
-			<?php
+			<?php }
 		}
 		
 		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'dashboard') {
@@ -108,8 +105,7 @@
 			<?php
 		}
 		
-		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'professor') {
-			?>
+		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'professor') {?>
 			<div class="row ">
 				<h1>Dashboard</h1>
 				<ol class="breadcrumb">
@@ -117,7 +113,7 @@
 					<li><a href="aluno_lista.php">Professores</a></li>
 				</ol>
 			</div>
-			<?php if(isset ( $_GET ['formulario'] ) && $_GET['formulario'] == 0) { ?>
+			<?php if(isset ( $_GET ['formulario'] ) && $_GET['formulario'] == 0) {?>
 			<div class="row">
 				<a href="aluno_lista.php?menu=aluno&formulario=1" class="btn btn-success">Adicionar</a>
 				<table class="table table-striped table-bordered  table-hover">
@@ -160,8 +156,7 @@
 						</form>
 			<?php }
 		}
-		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'coordenador') {
-			?>
+		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'coordenador') {?>
 			<div class="row ">
 				<h1>Dashboard</h1>
 				<ol class="breadcrumb">
@@ -210,11 +205,9 @@
 								<input type="submit"value="Salvar"/>
 			
 						</form>
-						<?php
-			 }		
+				<?php }		
 		}
-		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'sair') {
-			?>
+		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'sair') {?>
 			<div class="row ">
 				<h1>Dashboard</h1>
 				<ol class="breadcrumb">
@@ -227,11 +220,9 @@
 					<h1>Você deseja realmente sair ?</h1>
 					<br /> <input type="submit" value="sim" />
 				</form>
-			</div>	
-			
-			<?php
-		}
-		
+			</div>			
+		<?php
+		}	
 		?>
 
 		
