@@ -78,15 +78,18 @@
 					</tr>
 				</table>
 			</div>
-			<?php }else{ ?>
-						<form action="">
+			<?php }else{?>
+			
+					<?=(isset($_GET['msg']))?$_GET['msg']:'';?>
+					
+						<form method="post" action="aluno_valida.php">
 								<h1>Formulário</h1>
 								<label for="id" class="labelform">ID</label>
-								<input id="id" type="text"class="inputform" />
+								<input name="id" id="id<?php echo'oi';?>" type="text"class="inputform" />
 								<label for="nome"class="labelform">Nome</label>
-								<input type="text" id="nome" class="inputform" />
-								<label for="e-mail" class="labelform">E-Mail</label>
-								<input type="text" id="e-mail"class="inputform" />
+								<input name ="nome" type="text" id="nome" class="inputform" />
+								<label for="email" class="labelform">E-Mail</label>
+								<input name="email" type="text" id="email"class="inputform" />
 								<input type="submit"value="Salvar"/>
 			
 						</form>
@@ -143,14 +146,14 @@
 				</table>
 			</div>
 			<?php }else{ ?>
-						<form action="">
+						<form method="post">
 								<h1>Formulário</h1>
 								<label for="id" class="labelform">ID</label>
-								<input id="id" type="text"class="inputform" />
+								<input name="id" id="id" type="text"class="inputform" />
 								<label for="nome"class="labelform">Nome</label>
-								<input type="text" id="nome" class="inputform" />
+								<input name ="nome" type="text" id="nome" class="inputform" />
 								<label for="e-mail" class="labelform">E-Mail</label>
-								<input type="text" id="e-mail"class="inputform" />
+								<input name="e-mail" type="text" id="email"class="inputform" />
 								<input type="submit"value="Salvar"/>
 			
 						</form>
@@ -194,14 +197,14 @@
 				</table>
 			</div>
 			<?php }else{ ?>
-						<form action="">
+						<form method="post">
 								<h1>Formulário</h1>
 								<label for="id" class="labelform">ID</label>
-								<input id="id" type="text"class="inputform" />
+								<input name="id" id="id" type="text"class="inputform" />
 								<label for="nome"class="labelform">Nome</label>
-								<input type="text" id="nome" class="inputform" />
-								<label for="e-mail" class="labelform">E-Mail</label>
-								<input type="text" id="e-mail"class="inputform" />
+								<input name ="nome" type="text" id="nome" class="inputform" />
+								<label for="email" class="labelform">E-Mail</label>
+								<input name="email" type="text" id="email"class="inputform" />
 								<input type="submit"value="Salvar"/>
 			
 						</form>
