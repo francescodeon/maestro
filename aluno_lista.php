@@ -1,66 +1,20 @@
-<html>
-<head>
-<title>Maestro</title>
-<link rel="stylesheet" href="./css/bootstrap.css" />
-<link rel="stylesheet" href="./css/style.css" />
-<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-<script src="./js/bootstrap.js"></script>
-</head>
-
-<body>
-	<header>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4" id="logo">
-					<img src="./img/maestro.png" alt="Logo do Sistema" />
-				</div>
-				<div class="col-lg-8 " id="menu">
-					<ul class="nav nav-pills pull-right">
-						<li role="presentation"
-							class="<?php (isset($_GET['menu']) && $_GET['menu']=='dashboard')?'active':'';?>"><a
-							href="aluno_lista.php?menu=dashboard">Dashboard</a></li>
-						<li role="presentation"
-							class="<?=(isset($_GET['menu']) &&$_GET['menu']=='aluno')?'active':'';?>"><a
-							href="aluno_lista.php?menu=aluno&formulario=0">Alunos</a></li>
-						<li role="presentation"
-							class="<?=(isset($_GET['menu']) &&$_GET['menu']=='professor')?'active':'';?>"><a
-							href="aluno_lista.php?menu=professor&formulario=0">Professores</a></li>
-						<li role="presentation"
-							class="<?=(isset($_GET['menu']) &&$_GET['menu']=='coordenador')?'active':'';?>"><a
-							href="aluno_lista.php?menu=coordenador&formulario=0">Coordenadores</a></li>
-						<li role="presentation"
-							class="<?=(isset($_GET['menu']) &&$_GET['menu']=='sair')?'active':'';?>"><a
-							href="aluno_lista.php?menu=sair">Sair</a></li>
-					</ul>
-				</div>
-			</div>
-
+	<div class="row ">
+			<h1>Alunos</h1>
+			<ol class="breadcrumb">
+				<li><a href="index.php?pagina=dashboard">Maestro</a></li>
+				<li><a href="index.php?pagina=aluno&formulario=0">Alunos</a></li>
+			</ol>
 		</div>
-	</header>
-
-	<div id="content">
-		<div class="container">
-		<?php
-		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'aluno') {?>
-			<div class="row ">
-				<h1>Dashboard</h1>
-				<ol class="breadcrumb">
-					<li><a href="#">Maestro</a></li>
-					<li><a href="#">Alunos</a></li>
-				</ol>
-			</div>
-			<?php if(isset ( $_GET ['formulario'] ) && $_GET['formulario'] == 0) { ?>
-				<div class="row">
-				<?php
-					$ponteiroArquivo= fopen('arquivo_aluno.txt','r');
-				?>
-				<a href="aluno_lista.php?menu=aluno&formulario=1" class="btn btn-success">Adicionar</a>
+		
+		<?php if(isset ( $_GET ['formulario'] ) && $_GET['formulario'] == 0) { ?>
+			<div class="row">
 				
-				<?php $msg= filter_input(INPUT_GET, 'msg', FILTER_SANITIZE_STRING);
-				if($msg){
-					echo $msg;
-				}
-				?>
+				<a href="index.php?pagina=aluno&formulario=1" class="btn btn-success">Adicionar</a>
+				
+				<?php $msg = filter_input ( INPUT_GET, 'msg', FILTER_SANITIZE_STRING ); ?>
+				<?php if ($msg) { echo $msg; } ?>
+				
+				<?php $ponteiroArquivo = fopen ( 'arquivo_aluno.txt', 'r' ); ?>
 				<table class="table table-striped table-bordered  table-hover">
 					<tr>
 						<td>ID</td>
@@ -68,210 +22,54 @@
 						<td>E-mail</td>
 						<td>Funções</td>
 					</tr>
-					<?php 
-					while(!feof($ponteiroArquivo)){
-						
-						$row = fgets($ponteiroArquivo, 1024);
-						$dados= explode(';',$row);
-					?>
+					<?php while ( ! feof ( $ponteiroArquivo ) ) { ?>
+					<?php $row = fgets ( $ponteiroArquivo, 1024 ); ?>
+					<?php $dados = explode ( ';', $row );?>
 					<tr>
-						<td><?=$dados[0];?></td>
-						<td><?=$dados[1];?></td>
-						<td><?=$dados[2];?></td>
-						<td>					
-							<a href="aluno_lista.php?menu=aluno&formulario=1&id=<?=$dados[0];?>" class="btn btn-default btn-info">Editar</a> 
-							<a href="aluno_deleta.php?id=<?=$dados[0];?>" class="btn btn-default btn-danger">Deletar </a>
-						</td>				
+					<td><?=$dados[0];?></td>
+					<td><?=$dados[1];?></td>
+					<td><?=$dados[2];?></td>
+					<td><a
+						href="index.php?pagina=aluno&formulario=1&id=<?=$dados[0];?>"
+						class="btn btn-default btn-info">Editar</a> <a
+						href="aluno_deleta.php?id=<?=$dados[0];?>"
+						class="btn btn-default btn-danger">Deletar </a></td>
 					</tr>
-					<?php
-						}
-					?>
+					<?php } ?>
 				</table>
 			</div>
-			<?php }else{?>
+		<?php }else{?>
 			
 					<?=(isset($_GET['msg']))?$_GET['msg']:'';?>
-					<?php 
-						$id= filter_input(INPUT_GET, 'id' ,FILTER_VALIDATE_INT);
-						
-						if($id)
-						{
-							$ponteiroArquivo = fopen('arquivo_aluno.txt', 'r');
-							
-							while(!feof($ponteiroArquivo))
-							{
-								$linha =fgets($ponteiroArquivo, 1024);
-								$dados = explode(';',$linha);
-								if($dados[0]==$id)
-								{
-									$registro=$dados;
-								}
-							}
-							
+					<?php
+				$id = filter_input ( INPUT_GET, 'id', FILTER_VALIDATE_INT );
+				
+				if ($id) {
+					$ponteiroArquivo = fopen ( 'arquivo_aluno.txt', 'r' );
+					
+					while ( ! feof ( $ponteiroArquivo ) ) {
+						$linha = fgets ( $ponteiroArquivo, 1024 );
+						$dados = explode ( ';', $linha );
+						if ($dados [0] == $id) {
+							$registro = $dados;
 						}
-					
-					
-					?>
-						<form method="post" action="<?=($id) ? 'aluno_editar.php':'aluno_valida.php';?>">
-								<h1>Formulário</h1>
-								<label for="id" class="labelform">ID</label>
-								<input name="id" id="id<?php echo'oi';?>" type="text"class="inputform" value="<?=isset($registro[0])? $registro[0]: ' ';?>" />
-								<label for="nome"class="labelf orm">Nome</label>
-								<input name ="nome" type="text" id="nome" class="inputform" value="<?=isset($registro[1])? $registro[1]: ' ';?>" />
-								<label for="email" class="labelform">E-Mail</label>
-								<input name="email" type="text" id="email"class="inputform" value="<?=isset($registro[2])? $registro[2]: ' ';?>" />
-								<input type="submit"value="Salvar"/>
-			
-						</form>
-			<?php }
-		}
-		
-		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'dashboard') {
-			?>
-			<div class="row ">
-				<h1>Dashboard</h1>
-				<ol class="breadcrumb">
-					<li><a href="aluno_lista.php">Maestro</a></li>
-					<li><a href="aluno_lista.php">Dashboard</a></li>
-				</ol>
-			</div>
-			<?php
-		}
-		
-		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'professor') {?>
-			<div class="row ">
-				<h1>Dashboard</h1>
-				<ol class="breadcrumb">
-					<li><a href="aluno_lista.php">Maestro</a></li>
-					<li><a href="aluno_lista.php">Professores</a></li>
-				</ol>
-			</div>
-			<?php if(isset ( $_GET ['formulario'] ) && $_GET['formulario'] == 0) {?>
-			<div class="row">
-				<a href="aluno_lista.php?menu=aluno&formulario=1" class="btn btn-success">Adicionar</a>
-				<table class="table table-striped table-bordered  table-hover">
-					<tr>
-						<td>ID</td>
-						<td>Usuario</td>
-						<td>Funções</td>
-					</tr>
-					<tr>
-						<td>123</td>
-						<td>Juares</td>
-						<td><a href="#" class="btn btn-default btn-info">Editar</a> <a
-							href="#" class="btn btn-default btn-danger">Deletar</a></td>
-					</tr>
-					<tr>
-						<td>123</td>
-						<td>Juares</td>
-						<td><a href="#" class="btn btn-default btn-info">Editar</a> <a
-							href="#" class="btn btn-default btn-danger">Deletar</a></td>
-					</tr>
-					<tr>
-						<td>123</td>
-						<td>Juares</td>
-						<td><a href="#" class="btn btn-default btn-info">Editar</a> <a
-							href="#" class="btn btn-default btn-danger">Deletar</a></td>
-					</tr>
-				</table>
-			</div>
-			<?php }else{ ?>
-						<form method="post">
-								<h1>Formulário</h1>
-								<label for="id" class="labelform">ID</label>
-								<input name="id" id="id" type="text"class="inputform" />
-								<label for="nome"class="labelform">Nome</label>
-								<input name ="nome" type="text" id="nome" class="inputform" />
-								<label for="e-mail" class="labelform">E-Mail</label>
-								<input name="e-mail" type="text" id="email"class="inputform" />
-								<input type="submit"value="Salvar"/>
-			
-						</form>
-			<?php }
-		}
-		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'coordenador') {?>
-			<div class="row ">
-				<h1>Dashboard</h1>
-				<ol class="breadcrumb">
-					<li><a href="aluno_lista.php">Maestro</a></li>
-					<li><a href="aluno_lista.php">Coordenadores</a></li>
-				</ol>
-			</div>
-			<?php if(isset ( $_GET ['formulario'] ) && $_GET['formulario'] == 0) { ?>
-			<div class="row">
-				<a href="aluno_lista.php?menu=aluno&formulario=1" class="btn btn-success">Adicionar</a>
-				<table class="table table-striped table-bordered  table-hover">
-					<tr>
-						<td>ID</td>
-						<td>Usuario</td>
-						<td>Funções</td>
-					</tr>
-					<tr>
-						<td>123</td>
-						<td>Juares</td>
-						<td><a href="#" class="btn btn-default btn-info">Editar</a> <a
-							href="#" class="btn btn-default btn-danger">Deletar</a></td>
-					</tr>
-					<tr>
-						<td>123</td>
-						<td>Juares</td>
-						<td><a href="#" class="btn btn-default btn-info">Editar</a> <a
-							href="#" class="btn btn-default btn-danger">Deletar</a></td>
-					</tr>
-					<tr>
-						<td>123</td>
-						<td>Juares</td>
-						<td><a href="#" class="btn btn-default btn-info">Editar</a> <a
-							href="#" class="btn btn-default btn-danger">Deletar</a></td>
-					</tr>
-				</table>
-			</div>
-			<?php }else{ ?>
-						<form method="post">
-								<h1>Formulário</h1>
-								<label for="id" class="labelform">ID</label>
-								<input name="id" id="id" type="text"class="inputform" />
-								<label for="nome"class="labelform">Nome</label>
-								<input name ="nome" type="text" id="nome" class="inputform" />
-								<label for="email" class="labelform">E-Mail</label>
-								<input name="email" type="text" id="email"class="inputform" />
-								<input type="submit"value="Salvar"/>
-			
-						</form>
-				<?php }		
-		}
-		if (isset ( $_GET ['menu'] ) && $_GET ['menu'] == 'sair') {?>
-			<div class="row ">
-				<h1>Dashboard</h1>
-				<ol class="breadcrumb">
-					<li><a href="aluno_lista.php">Maestro</a></li>
-					<li><a href="aluno_lista.php">Sair</a></li>
-				</ol>
-			</div>
-			<div>
-				<form>
-					<h1>Você deseja realmente sair ?</h1>
-					<br /> <input type="submit" value="sim" />
-				</form>
-			</div>			
-		<?php
-		}	
-		?>
+					}
+				}
+				
+				?>
+						<form method="post"
+			action="<?=($id) ? 'aluno_editar.php':'aluno_valida.php';?>">
+			<h1>Formulário</h1>
+			<label for="id" class="labelform">ID</label> <input name="id"
+				id="id<?php echo'oi';?>" type="text" class="inputform"
+				value="<?=isset($registro[0])? $registro[0]: ' ';?>" /> <label
+				for="nome" class="labelf orm">Nome</label> <input name="nome"
+				type="text" id="nome" class="inputform"
+				value="<?=isset($registro[1])? $registro[1]: ' ';?>" /> <label
+				for="email" class="labelform">E-Mail</label> <input name="email"
+				type="text" id="email" class="inputform"
+				value="<?=isset($registro[2])? $registro[2]: ' ';?>" /> <input
+				type="submit" value="Salvar" />
 
-		
-			</div>
-
-
-	</div>
-
-	<footer>
-		<div class="container">
-			<div class="col-lg-12 text-center">
-				<p>Sistema Maestro. Versão 1.0.0.1</p>
-			</div>
-		</div>
-
-	</footer>
-
-</body>
-</html>
+		</form>
+			<?php } ?>

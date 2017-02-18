@@ -6,15 +6,15 @@ $email=filter_input(INPUT_POST, 'email',FILTER_SANITIZE_STRING);
 if(!$id)
 {
 	$mensagem='Informe o id';
-	header("location:/maestro/aluno_lista.php?msg=$mensagem&menu=aluno&formulario=0&id=$id");
+	header("location:/maestro/index.php?msg=$mensagem&pagina=aluno&formulario=0&id=$id");
 }elseif(!$nome)
 {
 	$mensagem='Informe o nome';
-	header("location:/maestro/aluno_lista.php?msg=$mensagem&menu=aluno&formulario=0&id=$id");
+	header("location:/maestro/index.php?msg=$mensagem&pagina=aluno&formulario=0&id=$id");
 }elseif(!$email)
 {
 	$mensagem='Informe o email';
-	header("location:/maestro/aluno_lista.php?msg=$mensagem&menu=aluno&formulario=01&id=$id");
+	header("location:/maestro/index.php?msg=$mensagem&pagina=aluno&formulario=0&id=$id");
 }else{
 
 	$buffer=array();
@@ -41,5 +41,5 @@ if(!$id)
 	fclose($ponteiroArquivo1);
 
 	$mensagem='Edição realizada com sucesso ';
-	header("location:/maestro/aluno_lista.php?msg=$mensagem&menu=aluno&formulario=0&id=$id");
+	header("location:/maestro/index.php?msg=$mensagem&pagina=aluno&formulario=0&id=$id");
 }

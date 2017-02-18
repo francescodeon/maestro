@@ -5,7 +5,7 @@ if($id)
 {
 	$buffer=array();
 
-	$ponteiroArquivo=fopen('arquivo_aluno.txt','r');
+	$ponteiroArquivo=fopen('arquivo_professor.txt','r');
 	while (!feof($ponteiroArquivo) )
 	{
 		$linha= fgets($ponteiroArquivo, 1024);
@@ -16,18 +16,18 @@ if($id)
 		}
 	}
 	fclose($ponteiroArquivo);
-	
-	$ponteiroArquivo1 =fopen('arquivo_aluno.txt','w');
+
+	$ponteiroArquivo1 =fopen('arquivo_professor.txt','w');
 	foreach ($buffer as $linha1)
 	{
 		fwrite($ponteiroArquivo1,$linha1);
 	}
 	fclose($ponteiroArquivo1);
-	
+
 	$mensagem='Exclusão realizada com sucesso ';
-	header("location:/maestro/index.php?msg=$mensagem&pagina=aluno&formulario=0");
+	header("location:/maestro/index.php?msg=$mensagem&pagina=professor&formulario=0");
 
 }else{
 	$mensagem='Informe um id para deletar';
-	header("location:/maestro/index.php?msg=$mensagem&pagina=aluno&formulario=0");
+	header("location:/maestro/index.php?msg=$mensagem&pagina=professor&formulario=0");
 }
