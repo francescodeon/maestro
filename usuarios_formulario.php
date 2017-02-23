@@ -22,33 +22,32 @@ if(!$id)
 		}else{
 				
 				
-			$ultimaLinha = array();
+			//Abrir Conexão
+			$link = mysqli_connect('localhost','root','');
+			$conexao = mysqli_select_db($link, 'maestro');
 
-			//abrir o arquivo
-			$ponteiroArquivo = fopen('arquivo_usuarios.txt', 'r');
+			//Faz o Uso
+			//Inserindo os dados
+			$sql = " insert into usuarios
+			(
+			id_usuario,
+			nome,
+			usuario,
+			senha
+			)
+			values
+			(
+			null,
+			'$usuario',
+			'@',
+			'$senha'
+			)";
 				
-			//manipulei o arquivo
-			while(!feof($ponteiroArquivo)){
-				//obtive a linha do arquivo
-				$linha = fgets($ponteiroArquivo, 1024);
-				//quebrei a linha transformando a string em um array ordenativo
-				$ultimaLinha= explode(';', $linha);
-			}
-			//fechei o arquivo
-			fclose($ponteiroArquivo);
-				
-			$quebra = '';
-			if($ultimaLinha[0] != ''){
-				$id = $ultimaLinha[0] + 1;
-				$quebra = "\n";
-			}else{
-				$id = '1';
-				$quebra = '';
-			}
+			$resultado = mysqli_query($link, $sql);
 
-			$fd = fopen ("arquivo_usuarios.txt", "a");
-			fwrite ($fd, "$quebra$id;$usuario;$senha");
-			fclose ($fd);
+			//Fechei a conexao
+			mysqli_close($link);
+
 				
 				
 			$mensagem['sucesso'] = 'Registro inserido. Você já pode edita-lo.';
@@ -73,36 +72,27 @@ else
 			$mensagem['senha'] = 'Preencha a senha';
 		}else{
 
-			$bufferArquivo = array();
+			//Abrir Conexão
+			$link = mysqli_connect('localhost','root','');
+			$conexao = mysqli_select_db($link, 'maestro');
+
+			//Faz o Uso
+			//Atualizando os dados
+			$sql = "
+			update usuarios
+			set
+			usuario = '$usuario',
+			nome = '$usuario',
+			senha = '$senha'
+
+			where
+			id_usuario = $id
+			";
 				
-			//abrir o arquivo
-			$ponteiroArquivo = fopen('arquivo_usuarios.txt', 'r');
-				
-			//manipulei o arquivo
-			while(!feof($ponteiroArquivo)){
-				$linha = fgets($ponteiroArquivo, 1024);
+			$resultado = mysqli_query($link, $sql);
 
-				$linhaAtual = explode(';', $linha);
-
-
-				if( $linhaAtual[0] == $id ){
-					$bufferArquivo[] = "\n$id;$usuario;$senha\n";
-				}else{
-					$bufferArquivo[] = $linha;
-				}
-			}
-			//fechei o arquivo
-			fclose($ponteiroArquivo);
-
-			//abrir o arquivo
-			$ponteiroArquivo1 = fopen('arquivo_usuarios.txt', 'w');
-			//escrever no arquivo
-			foreach($bufferArquivo as $linha1){
-				fwrite ($ponteiroArquivo1, $linha1);
-				echo $linha."\n";
-			}die();
-			//fechar o arquivo
-			fclose($ponteiroArquivo1);
+			//Fechei a conexao
+			mysqli_close($link);
 
 			$mensagem['sucesso'] = 'Registro Editado.';
 			header('location: usuarios_lista.php?mensagem='.$mensagem['sucesso']);
@@ -110,30 +100,38 @@ else
 		}
 
 	}else{
-		//Busco os dados do arquivo
+		//Busco os dados do banco de dados
 
 		$dados = array();
 
-		//abrir o arquivo
-		$ponteiroArquivo = fopen('arquivo_usuarios.txt', 'r');
-		//manipulei o arquivo
-		while(!feof($ponteiroArquivo)){
-			$linha = fgets($ponteiroArquivo, 1024);
-				
-			$linhaAtual = explode(';', $linha);
-				
-			if( $linhaAtual[0] == $id ){
-				$dados= $linhaAtual;
-				break;
-			}
-		}
-		//fechei o arquivo
-		fclose($ponteiroArquivo);
+
+		//Abrir Conexão
+		$link = mysqli_connect('localhost','root','');
+		$conexao = mysqli_select_db($link, 'maestro');
+
+		//Faz o Uso
+		//Atualizando os dados
+		$sql = "
+		select
+		*
+		from
+		usuarios
+		where
+		id_usuario = $id
+		";
+
+		$resultado = mysqli_query($link, $sql);
+
+		$row = mysql_affected_rows($resultado);
+
+		$usuario = $row['usuario'];
+		$senha = $row['senha'];
+
+		//Fechei a conexao
+		mysqli_close($link);
 
 
 
-		$usuario = $dados[1];
-		$senha = $dados[2];
 
 	}
 }
