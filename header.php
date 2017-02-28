@@ -34,6 +34,9 @@
 						<li role="presentation"
 							class="<?=(isset($_GET['pagina']) &&$_GET['pagina']=='usuarios')?'active':'';?>"><a
 							href="index.php?pagina=usuarios">Usuarios</a></li>
+						<li role="presentation"
+							class="<?=(isset($_GET['pagina']) &&$_GET['pagina']=='matriculas')?'active':'';?>"><a
+							href="index.php?pagina=matriculas">Matriculas</a></li>
 					</ul>
 				</div>
 			</div>
