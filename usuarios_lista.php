@@ -11,7 +11,7 @@
 	$query = 'SELECT * FROM usuarios';
 	$handle = mysqli_query($link, $query);
 	?>
-	<table>
+	<table class="table table-striped table-bordered  table-hover">
 		<tr>
 			<td>ID</td>
 			<td>Nome</td>

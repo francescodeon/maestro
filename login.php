@@ -1,18 +1,23 @@
 <?php
+
 session_start();
 $usuario= filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_STRING);
 $senha= filter_input(INPUT_POST , 'senha', FILTER_SANITIZE_STRING);
 $msg='';
+
 if(!$usuario){
 	$msg='Informe um Usuário';
 }elseif(!$senha){
 	$msg='Informe uma Senha';
 }else{
-	if($usuario=='cabral' && $senha=='brasil'){
-		$_SESSION['autenticado']=true;
-		header('location: index.php?pagina=dashboard');
-	}else{
-		$msg='Usuário ou Senha Incorretos';
+	$link = mysqli_connect('localhost','root','','maestro');
+	$query = "SELECT * FROM usuarios where usuario='$usuario' and senha ='$senha'";
+	$handle = mysqli_query($link, $query);
+		if($query)
+		{
+			$_SESSION['autenticado']=true;
+			header('location: index.php?pagina=dashboard');
+		}
 	}
 }
 ?>
