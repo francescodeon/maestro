@@ -41,7 +41,7 @@ if(!$id)
 
 			//Faz o Uso
 			//Inserindo os dados
-			echo $sql = " insert into aluno
+			 $sql = " insert into aluno
 					(
 					nome,
 					endereco,

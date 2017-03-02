@@ -12,10 +12,15 @@
 				<?php $msg = filter_input ( INPUT_GET, 'msg', FILTER_SANITIZE_STRING ); ?>
 				<?php if ($msg) { echo $msg; } ?>
 				
-				
-				<?php $link = mysqli_connect('localhost', 'root','', 'maestro');?> 
-				<?php $query = 'SELECT * FROM matricula ORDER BY id ASC';?>
-				<?php $handle = mysqli_query($link, $query);?>
+				<?php $link = mysqli_connect('localhost','root','','maestro');
+					$sql = "SELECT	
+							*
+						FROM matriculas
+						LEFT JOIN aluno ON (matriculas.id_aluno = aluno.id)
+						LEFT JOIN cursos ON (matriculas.id_curso = cursos.id)
+	   						";
+					$resultado = mysqli_query($link, $sql);?>	
+						
 
 				<table class="table table-striped table-bordered  table-hover">
 					<tr>
@@ -26,11 +31,11 @@
 						<td>Status do Pagamento</td>
 						<td>Funções</td>
 					</tr>
-					<?php while($row = mysqli_fetch_assoc($handle)){ ?>
+					<?php while($row = mysqli_fetch_assoc($resultado)){?>
 					<tr>
 						<td><?php echo $row['id'];?></td>
-						<td><?php echo $row['id_aluno'];?></td>
-						<td><?php echo $row['id_curso'];?></td>
+						<td><?php echo $row['nome'];?></td>
+						<td><?php echo $row['curso'];?></td>
 						<td><?php echo $row['data_matricula'];?></td>
 						<td><?php echo $row['status_pagamento'];?></td>
 						<td>

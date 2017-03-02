@@ -13,13 +13,15 @@ if(!$usuario){
 	$link = mysqli_connect('localhost','root','','maestro');
 	$query = "SELECT * FROM usuarios where usuario='$usuario' and senha ='$senha'";
 	$handle = mysqli_query($link, $query);
-		if($query)
+		if(mysqli_num_rows($handle)>0)
 		{
 			$_SESSION['autenticado']=true;
 			header('location: index.php?pagina=dashboard');
+		}else{
+			$_SESSION['autenticado']=false;
+			$msg = 'FAIL';
 		}
 	}
-}
 ?>
 <html>
 	<head>

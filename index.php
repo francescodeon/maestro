@@ -20,6 +20,7 @@ switch($pagina){
 	case 'aluno_formulario':{include ('aluno_formulario.php'); break;}
 	case 'aluno_deletar':{include ('aluno_deleta.php'); break;}
 	case 'matriculas':{include ('matriculas_lista.php'); break;}
+	case 'matriculas_formulario':{include ('matriculas_formulario.php'); break;}
 	default:{include('dashboard.php');break;}
 	}
 	
